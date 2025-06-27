@@ -4,6 +4,13 @@
 
 Implemnetation of [An Embarrassingly Simple Approach for LLM with Strong ASR Capacity](https://arxiv.org/abs/2402.08846) (Ma+, 2024)
 
+![model architecture](image.png)
+
+This implementation uses:
+
+- `openai/whisper-small` as the audio encoder
+- `sbintuitions/sarashina2.2-1b-instruct-v0.1` as the text decoder
+
 ### Data
 
 - [日本語話し言葉コーパス (CSJ)](https://clrd.ninjal.ac.jp/csj/)
