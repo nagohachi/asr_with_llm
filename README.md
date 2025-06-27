@@ -4,7 +4,7 @@
 
 Implemnetation of [An Embarrassingly Simple Approach for LLM with Strong ASR Capacity](https://arxiv.org/abs/2402.08846) (Ma+, 2024)
 
-![model architecture](image.png)
+![model architecture](images/model_architecture.png)
 
 This implementation uses:
 
