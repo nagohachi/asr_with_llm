@@ -51,6 +51,7 @@ class LitASRWithLLMModule(LightningModule):
             optimizer=optimizer,
             num_warmup_steps=num_warmup_steps,
             num_training_steps=total_train_steps,
+            num_cycles=3,
         )
         return {
             "optimizer": optimizer,
@@ -67,6 +68,14 @@ class LitASRWithLLMModule(LightningModule):
             input_ids=batch["input_ids"],
             labels=batch["labels"],
         )
+
+        # from torchviz import make_dot
+
+        # make_dot(output.loss, params=dict(self.model.named_parameters())).render(
+        #     "model_graph",
+        #     format="svg",
+        #     directory=".",
+        # )
 
         return cast(torch.FloatTensor, output.loss)
 

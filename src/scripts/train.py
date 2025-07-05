@@ -2,7 +2,7 @@ import datetime
 from pathlib import Path
 
 from lightning import Trainer
-from lightning.pytorch.callbacks import ModelCheckpoint
+from lightning.pytorch.callbacks import LearningRateMonitor, ModelCheckpoint
 from lightning.pytorch.loggers import WandbLogger
 from transformers import AutoTokenizer, WhisperFeatureExtractor
 from transformers.tokenization_utils import PreTrainedTokenizer
@@ -28,8 +28,8 @@ class CONFIG:
     train_batch_size = 4
     valid_batch_size = 4
     learning_rate = 1e-4
-    num_epochs = 3
-    grad_accumulation_steps = 4
+    num_epochs = 16
+    grad_accumulation_steps = 2
     gpus = [0, 1, 2, 3]
 
 
@@ -66,16 +66,19 @@ def train() -> None:
 
     trainer = Trainer(
         devices=CONFIG.gpus,
-        # precision="16-mixed",
         logger=WandbLogger(
             project="asr_with_llm",
             name=datetime.datetime.now().strftime(format="%Y%m%d_%H%M"),
         ),
-        callbacks=ModelCheckpoint(monitor="valid_loss", save_top_k=10, save_last=True),
+        callbacks=[
+            ModelCheckpoint(monitor="valid_loss", save_top_k=10, save_last=True),
+            LearningRateMonitor(logging_interval="step"),
+        ],
         max_epochs=CONFIG.num_epochs,
         num_sanity_val_steps=0,
-        val_check_interval=0.2,
+        val_check_interval=0.5,
         log_every_n_steps=50,
+        accumulate_grad_batches=CONFIG.grad_accumulation_steps,
     )
 
     trainer.fit(module, datamodule)
