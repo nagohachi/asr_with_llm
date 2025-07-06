@@ -41,6 +41,6 @@ python -m src.scripts.test --ckpt /path/to/checkpoint
 
 ## Metrics (CER)
 
-| Audio Encoder | Text Decoder | eval1 (dev) | eval2 (test) | eval3 (test) |
+| Speech Encoder | LLM | eval1 (dev) | eval2 (test) | eval3 (test) |
 | ------------- | ------------ | ----------- | ------------ | ------------ |
 | [openai/whisper-small](https://huggingface.co/openai/whisper-small) | [sbintuitions/sarashina2.2-1b-instruct-v0.1](https://huggingface.co/sbintuitions/sarashina2.2-3b-instruct-v0.1) | 8.54 | 6.44 | 7.18 |
